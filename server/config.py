@@ -9,7 +9,7 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret_key')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'sqlite:///database.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
+    MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
 
 def register_routes(app):
     routes_dir = os.path.join(os.path.dirname(__file__), "routes")

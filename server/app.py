@@ -1,11 +1,17 @@
-# server/app.py
+# server/__init__.py
 from flask import Flask
+from .config import Config, register_routes, register_models
+from .models import db
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-@app.route('/')
-def home():
-    return "Welcome to Tokyo Travel Tips!"
+    # Initialize database and other extensions
+    db.init_app(app)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    # Register routes and models
+    register_routes(app)
+    register_models(app)
+
+    return app
