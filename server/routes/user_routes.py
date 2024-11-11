@@ -10,31 +10,41 @@ def register_user():
     data = request.get_json()
 
     # Check if username or email already exists
-    user_exists = User.query.filter_by(username=data.get("username")).first()
-    email_exists = User.query.filster_by(email=data.get("email")).first()
-    if user_exists:
+    if User.query.filter_by(username=data.get("username")).first():
         return jsonify({"error": "Username already exists"}), 409
-    if email_exists:
+    if User.query.filter_by(email=data.get("email")).first():
         return jsonify({"error": "Email already exists"}), 409
-
-    # Get user input
-    username = data.get("username")
-    email = data.get("email")
-    password = data.get("password")
-    full_name = data.get("full_name")
-
-    # Hash the password
-    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
 
     # Create a new user object
     new_user = User(
-        full_name=full_name,
-        user_name=user_name,
-        email=email,
-        password=password,
+        username=data.get("username"),
+        email=data.get("email"),
+        full_name=data.get("full_name")
     )
 
-db.session.add(new_user)
-db.session.commit()
+    # Use set_password method in the model to hash the password
+    new_user.set_password(data.get("password"))
 
-access_token = create_access_token(identity=new_user.user_id)
+    # Add the new user to the database
+    db.session.add(new_user)
+    db.session.commit()
+
+    # Generate an access token for the new user
+    access_token = create_access_token(identity=new_user.user_id)
+
+    return jsonify({"user": new_user.to_json(), "access_token": access_token}), 201
+
+
+@app.route("/login", methods=["POST"])
+def login_user():
+    data = request.get_json()
+    user = User.query.filter_by(username=data.get("username")).first()
+
+    # Check if user exists and if password is correct
+    if not user or not user.check_password(data.get("password")):
+        return jsonify({"error": "Invalid username or password"}), 401
+
+    # Generate access token upon successful login
+    access_token = create_access_token(identity=user.user_id)
+
+    return jsonify({"access_token": access_token, "full_name": user.full_name, "message": "Login successful"}), 200
