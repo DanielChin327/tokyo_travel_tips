@@ -5,6 +5,12 @@ from models import db, User
 from flask_jwt_extended import create_access_token, unset_jwt_cookies
 from models.models import db, User
 
+user_bp = Blueprint('user', __name__, url_prefix='/user')
+
+@user_bp.route('/test', methods=['GET'])
+def test():
+    return jsonify({"message": "User route is working!"})
+
 @app.route("/register", methods=["POST"])
 def register_user():
     data = request.get_json()
