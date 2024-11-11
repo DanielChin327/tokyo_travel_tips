@@ -1,17 +1,18 @@
 # routes/users_routes.py
-from app import app, bcrypt
-from flask import Blueprint, request, jsonify
-from models import db, User
-from flask_jwt_extended import create_access_token, unset_jwt_cookies
+from flask import Blueprint, jsonify
+from flask_jwt_extended import create_access_token
 from models.models import db, User
 
+# Define a Blueprint
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
+# Test route to verify blueprint registration
 @user_bp.route('/test', methods=['GET'])
 def test():
     return jsonify({"message": "User route is working!"})
 
-@app.route("/register", methods=["POST"])
+# Registration and login routes
+@user_bp.route("/register", methods=["POST"])
 def register_user():
     data = request.get_json()
 
@@ -27,8 +28,6 @@ def register_user():
         email=data.get("email"),
         full_name=data.get("full_name")
     )
-
-    # Use set_password method in the model to hash the password
     new_user.set_password(data.get("password"))
 
     # Add the new user to the database
@@ -37,11 +36,9 @@ def register_user():
 
     # Generate an access token for the new user
     access_token = create_access_token(identity=new_user.user_id)
-
     return jsonify({"user": new_user.to_json(), "access_token": access_token}), 201
 
-
-@app.route("/login", methods=["POST"])
+@user_bp.route("/login", methods=["POST"])
 def login_user():
     data = request.get_json()
     user = User.query.filter_by(username=data.get("username")).first()
@@ -52,5 +49,4 @@ def login_user():
 
     # Generate access token upon successful login
     access_token = create_access_token(identity=user.user_id)
-
     return jsonify({"access_token": access_token, "full_name": user.full_name, "message": "Login successful"}), 200

@@ -4,8 +4,8 @@ from flask_cors import CORS  # Allow cross-origin requests (useful if frontend i
 from flask_sqlalchemy import SQLAlchemy  # ORM for database interaction
 from flask_bcrypt import Bcrypt  # For hashing passwords securely
 from flask_jwt_extended import JWTManager  # For JWT-based authentication
-from config import Config  # Import configuration settings
-from routes.users_routes import user_bp  # Import the user routes
+from config import Config, register_routes # Import configuration settings
+
 
 # Initialize the app
 app = Flask(__name__)
@@ -17,8 +17,9 @@ db = SQLAlchemy(app)  # Initialize SQLAlchemy for database
 bcrypt = Bcrypt(app)  # Initialize Bcrypt for password hashing
 jwt = JWTManager(app)  # Initialize JWT for secure user authentication
 
-# Register user routes
-app.register_blueprint(user_bp)
+
+register_routes(app)
+
 
 # Run the app in debug mode
 if __name__ == "__main__":
