@@ -1,26 +1,34 @@
-# app.py
-from flask import Flask  # Import Flask to create the app
-from flask_cors import CORS  # Allow cross-origin requests (useful if frontend is separate)
-from flask_sqlalchemy import SQLAlchemy  # ORM for database interaction
-from flask_bcrypt import Bcrypt  # For hashing passwords securely
-from flask_jwt_extended import JWTManager  # For JWT-based authentication
-from config import Config, register_routes # Import configuration settings
+from flask import Flask
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from config import Config, register_routes
+from extensions import db, bcrypt, jwt  # Import extensions
 
-
-# Initialize the app
+# Initialize the Flask app
 app = Flask(__name__)
-app.config.from_object(Config)  # Load settings from Config class
+app.config.from_object(Config)
 
-# Initialize extensions
-CORS(app)  # Enable CORS
-db = SQLAlchemy(app)  # Initialize SQLAlchemy for database
-bcrypt = Bcrypt(app)  # Initialize Bcrypt for password hashing
-jwt = JWTManager(app)  # Initialize JWT for secure user authentication
+# Enable CORS, bcrypt for password hashing, and JWT for authentication
+CORS(app)
+db.init_app(app)
+bcrypt.init_app(app)
+jwt.init_app(app)
 
-
+# Register Blueprints (modular routes)
 register_routes(app)
 
 
-# Run the app in debug mode
+@app.route("/")
+def testing():
+    return "flask app is running"
+
+# Apply CORS headers to all responses
+@app.after_request
+def apply_cors(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET,POST,OPTIONS,PUT,DELETE"
+    return response
+
 if __name__ == "__main__":
     app.run(debug=True)

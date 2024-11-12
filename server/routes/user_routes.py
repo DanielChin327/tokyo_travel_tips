@@ -1,52 +1,63 @@
-# routes/users_routes.py
-from flask import Blueprint, jsonify
+from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token
-from models.models import db, User
+from extensions import db, bcrypt  # Import from extensions
+from models import User
 
-# Define a Blueprint
-user_bp = Blueprint('user', __name__, url_prefix='/user')
+# Define Blueprint
+user_bp = Blueprint("user_bp", __name__)
 
-# Test route to verify blueprint registration
-@user_bp.route('/test', methods=['GET'])
-def test():
-    return jsonify({"message": "User route is working!"})
+# Test route to confirm user_routes is working
+@user_bp.route("/test", methods=["GET"])
+def test_route():
+    return jsonify({"message": "user_routes is working"}), 200
 
-# Registration and login routes
+
 @user_bp.route("/register", methods=["POST"])
 def register_user():
     data = request.get_json()
 
-    # Check if username or email already exists
-    if User.query.filter_by(username=data.get("username")).first():
+    # Check if user_name or email already exists
+    user_exists = User.query.filter_by(user_name=data.get("user_name")).first()  # Changed to user_name
+    email_exists = User.query.filter_by(email=data.get("email")).first()
+
+    if user_exists:
         return jsonify({"error": "Username already exists"}), 409
-    if User.query.filter_by(email=data.get("email")).first():
+    if email_exists:
         return jsonify({"error": "Email already exists"}), 409
 
-    # Create a new user object
-    new_user = User(
-        username=data.get("username"),
-        email=data.get("email"),
-        full_name=data.get("full_name")
-    )
-    new_user.set_password(data.get("password"))
+    # Extract and hash the password
+    full_name = data.get("full_name")
+    user_name = data.get("user_name")  # Changed to user_name
+    email = data.get("email")
+    password = data.get("password")
+    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
 
-    # Add the new user to the database
+    # Create and save new user
+    new_user = User(
+        full_name=full_name,
+        user_name=user_name,  # Changed to user_name
+        email=email,
+        password=hashed_password,
+    )
     db.session.add(new_user)
     db.session.commit()
 
-    # Generate an access token for the new user
+    # Generate access token
     access_token = create_access_token(identity=new_user.user_id)
     return jsonify({"user": new_user.to_json(), "access_token": access_token}), 201
+
 
 @user_bp.route("/login", methods=["POST"])
 def login_user():
     data = request.get_json()
-    user = User.query.filter_by(username=data.get("username")).first()
+    user_name = data.get("user_name")  # Changed to user_name
+    password = data.get("password")
 
-    # Check if user exists and if password is correct
-    if not user or not user.check_password(data.get("password")):
+    # Check if the user_name exists
+    user = User.query.filter_by(user_name=user_name).first()  # Changed to user_name
+    if not user or not bcrypt.check_password_hash(user.password, password):
         return jsonify({"error": "Invalid username or password"}), 401
 
     # Generate access token upon successful login
     access_token = create_access_token(identity=user.user_id)
-    return jsonify({"access_token": access_token, "full_name": user.full_name, "message": "Login successful"}), 200
+    return jsonify({"access_token": access_token, "user_id": user.user_id, "message": "Login successful"}), 200
