@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_cors import CORS
+from flask_cors import CORS # To handle things from the Front End
 from flask_sqlalchemy import SQLAlchemy
 from config import Config, register_routes
 from extensions import db, bcrypt, jwt  # Import extensions
