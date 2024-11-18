@@ -1,17 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-
+import Landing from './pages/Landing/Landing'
+import Author from './pages/Author/Author'
 
 function App() {
 
+let message = "hi"
 
  return (
-<>
-<BrowserRouter>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/Author" element={<Author/>} />
 
 
 
@@ -19,9 +20,8 @@ function App() {
 
 
 
-
-</BrowserRouter>
-</>
+    </Routes>
+  </BrowserRouter>
 );
 
 }
