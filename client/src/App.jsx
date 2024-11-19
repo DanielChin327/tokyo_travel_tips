@@ -1,34 +1,28 @@
-import './App.css'
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import Landing from './pages/Landing/Landing'
-import Author from './pages/Author/Author'
-
-import Register from './pages/Register/Register'
-
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import Login from './pages/Login/Login';
+import Landing from './pages/Landing/Landing';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localStorage.getItem('accessToken')));
 
-let message = "hi"
+  useEffect(() => {
+    const checkToken = () => {
+      setIsLoggedIn(Boolean(localStorage.getItem('accessToken')));
+    };
+    checkToken();
+  }, []);
 
-return (
-  <BrowserRouter>
-
-
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/Author" element={<Author/>} />
-      <Route path='/register' element={<Register/>} />
-
-
-
-
-
-
-    </Routes>
-  </BrowserRouter>
-);
-
+  return (
+    <Router>
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
