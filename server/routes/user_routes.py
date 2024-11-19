@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, unset_jwt_cookies
 from extensions import db, bcrypt  # Import from extensions
 from models import User
 
@@ -34,6 +34,7 @@ def register_user():
 
     # Create and save new user
     new_user = User(
+
         full_name=full_name,
         user_name=user_name,  # Changed to user_name
         email=email,
@@ -61,3 +62,10 @@ def login_user():
     # Generate access token upon successful login
     access_token = create_access_token(identity=user.user_id)
     return jsonify({"access_token": access_token, "user_id": user.user_id, "message": "Login successful"}), 200
+
+@user_bp.route("/logout", methods=["POST"])
+def logout_user():
+    response = jsonify({"message": "Logout successful"})
+    unset_jwt_cookies(response)
+
+    return response, 200
