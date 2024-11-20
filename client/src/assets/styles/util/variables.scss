@@ -1,0 +1,30 @@
+// _variables.scss
+
+// Primary color scheme
+$primary-color: #26292c; // Dark gray for main backgrounds and buttons
+$secondary-color: #eb111d; // Vibrant red as an accent color
+
+// Background color
+$bg-color: $primary-color;
+
+// Text colors
+$text-color: #f2f2f2; // Light gray for standard text
+$text-hover-color: #6a6b69; // Medium gray for text hover effects
+
+// Button colors
+$button-bg-color: $secondary-color; // Red for button backgrounds
+$button-hover-color: #b1122c; // Darker red for button hover state
+$input-bg: #6a6b69; // Medium gray for input backgrounds
+
+// Form colors
+$form-bg-color: #f2f2f2; // Light gray for form backgrounds
+
+// Other colors (for borders, highlights, etc.)
+$border-color: #26292c; // Dark gray for borders
+$input-border-color: #6a6b69; // Medium gray for input borders
+
+// Font style
+$font-family: Arial, sans-serif;
+
+// Shadow style
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);

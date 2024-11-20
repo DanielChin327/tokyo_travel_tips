@@ -1,0 +1,52 @@
+@import "../../assets/styles/util/variables.scss";
+
+.tokyo-container {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  font-family: var(--font-family);
+  color: var(--text-color);
+
+  .section {
+    margin-bottom: 2rem;
+
+    .section-title {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+
+    ul {
+      margin-top: 1rem;
+      padding-left: 1.5rem;
+
+      li {
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+
+        strong {
+          color: var(--secondary-color);
+        }
+      }
+    }
+
+    .history-timeline {
+      list-style-type: disc;
+    }
+
+    .travel-tips {
+      list-style-type: square;
+    }
+  }
+
+  hr {
+    border: 0;
+    height: 1px;
+    background: var(--input-border-color);
+    margin: 2rem 0;
+  }
+}

@@ -1,38 +1,72 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './Navbar.scss';
 
-import './Navbar.scss'
+function Navbar({ isLoggedIn, handleLogout, userType }) {
+  const [scrolled, setScrolled] = useState(false);
 
-function Navbar({ isLoggedIn, setIsLoggedIn }) {
-  const navigate = useNavigate();
+  // Detect scroll and toggle "scrolled" state
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50); // Toggle scrolled class after 50px of scrolling
+    };
 
-  const handleLogout = async () => {
-    try {
-      await axios.post('http://localhost:5000/user/logout');
-      localStorage.removeItem('accessToken'); // Remove the token
-      setIsLoggedIn(false); // Update login state
-      navigate('/login'); // Redirect to login page
-    } catch (error) {
-      console.error('Logout error:', error);
-      alert('An error occurred during logout.');
-    }
-  };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <ul className="nav-links">
         <li>
-          <Link to="/">Intro</Link>
+          <Link className="navbar-link" to="/">
+            Home
+          </Link>
         </li>
-      </ul>
-      <div className="auth-button">
+        <li>
+          <Link className="navbar-link" to="/tokyo">
+            Tokyo
+          </Link>
+        </li>
+        <li>
+          <Link className="navbar-link" to="/itineraries">
+            Itineraries
+          </Link>
+        </li>
         {isLoggedIn ? (
-          <button onClick={handleLogout}>Logout</button>
+          <>
+            <li>
+              <Link
+                className="navbar-link"
+                to={
+                  userType === 'employer'
+                    ? '/employer-dashboard'
+                    : '/job-seeker-dashboard'
+                }>
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <button className="logout-button" onClick={handleLogout}>
+                Logout
+              </button>
+            </li>
+          </>
         ) : (
-          <Link to="/login">Login</Link>
+          <>
+            <li>
+              <Link className="navbar-link" to="/login">
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link className="navbar-link" to="/register">
+                Register
+              </Link>
+            </li>
+          </>
         )}
-      </div>
+      </ul>
     </nav>
   );
 }
