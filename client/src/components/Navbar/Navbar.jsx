@@ -1,73 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './Navbar.scss';
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { Link as RouterLink } from 'react-router-dom'; // Use for React Router navigation
+import { styled } from '@mui/material/styles';
 
-function Navbar({ isLoggedIn, handleLogout, userType }) {
-  const [scrolled, setScrolled] = useState(false);
-
-  // Detect scroll and toggle "scrolled" state
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50); // Toggle scrolled class after 50px of scrolling
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+function Navbar({ isLoggedIn, handleLogout }) {
+  // Styled MUI Button for navigation links
+  const NavButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.primary.contrastText,
+    margin: '0 10px',
+    textTransform: 'none',
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  }));
 
   return (
-    <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
-      <ul className="nav-links">
-        <li>
-          <Link className="navbar-link" to="/">
+    <AppBar position="fixed" sx={{ backgroundColor: '#26292c' }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        {/* Site Title */}
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          My Travel Site
+        </Typography>
+
+        {/* Navigation Links */}
+        <div>
+          <NavButton component={RouterLink} to="/">
             Home
-          </Link>
-        </li>
-        <li>
-          <Link className="navbar-link" to="/tokyo">
-            Tokyo
-          </Link>
-        </li>
-        <li>
-          <Link className="navbar-link" to="/itineraries">
+          </NavButton>
+          <NavButton component={RouterLink} to="/tokyo">
+            Why Tokyo?
+          </NavButton>
+          <NavButton component={RouterLink} to="/itineraries">
             Itineraries
-          </Link>
-        </li>
-        {isLoggedIn ? (
-          <>
-            <li>
-              <Link
-                className="navbar-link"
-                to={
-                  userType === 'employer'
-                    ? '/employer-dashboard'
-                    : '/job-seeker-dashboard'
-                }>
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <button className="logout-button" onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link className="navbar-link" to="/login">
+          </NavButton>
+          {isLoggedIn ? (
+            <NavButton onClick={handleLogout}>Logout</NavButton>
+          ) : (
+            <>
+              <NavButton component={RouterLink} to="/login">
                 Login
-              </Link>
-            </li>
-            <li>
-              <Link className="navbar-link" to="/register">
+              </NavButton>
+              <NavButton component={RouterLink} to="/register">
                 Register
-              </Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </nav>
+              </NavButton>
+            </>
+          )}
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 }
 

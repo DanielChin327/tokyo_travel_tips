@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
+import Register from './pages/Register/Register'
 import Landing from './pages/Landing/Landing';
 import Tokyo from './pages/Tokyo/Tokyo'
 import Itineraries from './pages/Itineraries/Itineraries';
@@ -23,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/register" element={<Register/>} />
         <Route path="/tokyo" element={<Tokyo />} />
         <Route path="/itineraries" element={<Itineraries />} />
       </Routes>
