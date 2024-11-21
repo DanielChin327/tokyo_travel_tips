@@ -9,7 +9,6 @@ import Landing from './pages/Landing/Landing';
 import Tokyo from './pages/Tokyo/Tokyo'
 import Itineraries from './pages/Itineraries/Itineraries';
 
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localStorage.getItem('accessToken')));
 
