@@ -1,4 +1,4 @@
-#!/home/danielchin/code/DanielChin327/projects/tokyo_travel_tips/venv/bin/python3
+#!/home/danielchin/code/DanielChin327/projects/tokyo_travel_tips/tokyo_travel_tips/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
