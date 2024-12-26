@@ -22,7 +22,7 @@ function Navbar({ isLoggedIn, handleLogout }) {
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* Site Title */}
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          My Travel Site
+          Tokyo Travel Tips
         </Typography>
 
         {/* Navigation Links */}
@@ -30,11 +30,20 @@ function Navbar({ isLoggedIn, handleLogout }) {
           <NavButton component={RouterLink} to="/">
             Home
           </NavButton>
-          <NavButton component={RouterLink} to="/tokyo">
-            Why Tokyo?
-          </NavButton>
           <NavButton component={RouterLink} to="/itineraries">
             Itineraries
+          </NavButton>
+          <NavButton component={RouterLink} to="/itineraries">
+            Budget
+          </NavButton>
+          <NavButton component={RouterLink} to="/itineraries">
+            Language
+          </NavButton>
+          <NavButton component={RouterLink} to="/itineraries">
+            Manners
+          </NavButton>
+          <NavButton component={RouterLink} to="/itineraries">
+            Author
           </NavButton>
           {isLoggedIn ? (
             <NavButton onClick={handleLogout}>Logout</NavButton>

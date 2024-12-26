@@ -6,64 +6,24 @@ function Landing() {
   const message = "Welcome to Tokyo Travel Tips!";
 
   return (
-    <div className="landing-container">
-      {/* Banner Section */}
-      <Box
-        sx={{
-          backgroundColor: "var(--primary-color)", // Using SASS variable
-          color: "var(--text-color)",
-          textAlign: "center",
-          padding: "2rem",
-        }}
-      >
-        <Typography
-          variant="h2"
-          component="h1"
-          sx={{ fontFamily: "var(--font-family)" }}
-        >
-          Tokyo Travel Tips
-        </Typography>
-      </Box>
+  <div className="landing-container">
 
-      {/* Content Section */}
-      <Container
-        maxWidth="md"
-        sx={{
-          marginTop: "2rem",
-          color: "var(--text-color)",
-          fontFamily: "var(--font-family)",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          Discover the Greatest City in the World!
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Welcome to our website! Here, we provide everything you need to know
-          about Tokyo, whether you're a first-time visitor or a seasoned
-          traveler. Learn about the city's rich history, get valuable travel
-          tips, and even share your own experiences with others.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Explore Tokyo like never before and make your journey unforgettable.
-        </Typography>
+  <div className="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.637),rgba(0, 0, 0, 0.665)), url('/client/src/assets/images/tokyo_station.jpg');">
+    <h1>Le Wagon brings <strong>tech skills</strong> to <strong>creative people</strong>!</h1>
+    <p>Change your life and learn to code at one of our campuses around the world.</p>
+    <a className="btn btn-flat" href="#">Apply now</a>
 
-        {/* Call to Action */}
-        <Box textAlign="center" mt={4}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "var(--button-bg-color)",
-              color: "var(--form-bg-color)",
-              "&:hover": {
-                backgroundColor: "var(--button-hover-color)",
-              },
-            }}
-          >
-            Get Started
-          </Button>
-        </Box>
-      </Container>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+  </div>
   );
 }
 
