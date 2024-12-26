@@ -1,34 +1,54 @@
 @import "../../assets/styles/util/variables.scss";
 
-.landing-container {
-  background-color: var(--bg-color);
-  min-height: 100vh; // Full-screen height
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+// .landing-container {
+//   background-color: var(--bg-color);
+//   min-height: 100vh; // Full-screen height
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: flex-start;
 
-  h1, h4, p {
-    margin: 0;
-    padding: 0.5rem 0;
-    color:black
-  }
+//   h1, h4, p {
+//     margin: 0;
+//     padding: 0.5rem 0;
+//     color:black
+//   }
 
-  button {
-    font-family: var(--font-family);
-  }
-}
+//   button {
+//     font-family: var(--font-family);
+//   }
+// }
 
 .banner{
   background-image: linear-gradient(rgba(0, 0, 0, 0.637), rgba(0, 0, 0, 0.665)),
-  url("/client/src/assets/images/tokyo_station.jpg");
+  url("//client/src/assets/images/tokyo_station.jpg");
 background-size: cover;
 background-position: center;
-height: 100vh; /* Adjust based on design */
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
 text-align: center;
 color: white; /* Example text styling */
+}
+
+.banner {
+  background-size: cover;
+  background-position: center;
+  padding: 150px 0;
+}
+
+.banner h1 {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.banner p {
+  font-size: 20px;
+  color: white;
+  opacity: .7;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }

@@ -9,11 +9,9 @@ function Landing() {
   <div className="landing-container">
 
   <div className="banner" >
-    <h1>Le Wagon brings <strong>tech skills</strong> to <strong>creative people</strong>!</h1>
-    <p>Change your life and learn to code at one of our campuses around the world.</p>
-    <a className="btn btn-flat" href="#">Apply now</a>
-
-</div>
+    <h1>Tokyo Travel Tips</h1>
+    <p>Helping you find your way through Tokyo</p>
+  </div>
 
 
 
