@@ -8,7 +8,7 @@ function Landing() {
   return (
   <div className="landing-container">
 
-  <div className="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.637),rgba(0, 0, 0, 0.665)), url('/client/src/assets/images/tokyo_station.jpg');">
+  <div className="banner" >
     <h1>Le Wagon brings <strong>tech skills</strong> to <strong>creative people</strong>!</h1>
     <p>Change your life and learn to code at one of our campuses around the world.</p>
     <a className="btn btn-flat" href="#">Apply now</a>

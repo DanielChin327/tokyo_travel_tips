@@ -18,3 +18,17 @@
     font-family: var(--font-family);
   }
 }
+
+.banner{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.637), rgba(0, 0, 0, 0.665)),
+  url("/client/src/assets/images/tokyo_station.jpg");
+background-size: cover;
+background-position: center;
+height: 100vh; /* Adjust based on design */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+color: white; /* Example text styling */
+}
